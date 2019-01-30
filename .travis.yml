@@ -11,6 +11,7 @@ env:
   global:
     - ROS_PARALLEL_JOBS="-j1"
     - CATKIN_PARALLEL_JOBS="-p1"
+    - DEBUG_BASH=1
   matrix:
     - ROS_DISTRO="kinetic" UPSTREAM_WORKSPACE=file ROS_REPOSITORY_PATH=http://packages.ros.org/ros/ubuntu NOT_TEST_INSTALL=true
     - ROS_DISTRO="kinetic" UPSTREAM_WORKSPACE=file ROS_REPOSITORY_PATH=http://packages.ros.org/ros-shadow-fixed/ubuntu NOT_TEST_INSTALL=true
