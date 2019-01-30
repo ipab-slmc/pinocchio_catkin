@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 2.8.12)
 project(pinocchio)
 
 find_package(catkin REQUIRED COMPONENTS eigenpy)
+find_package(Eigen3 REQUIRED)
 
 include(ExternalProject)
 
@@ -14,21 +15,29 @@ ExternalProject_Add(pinocchio
   PATCH_COMMAND ""
   TEST_COMMAND ""
 
-  CMAKE_ARGS -DBUILD_UNIT_TESTS=OFF -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=${CATKIN_DEVEL_PREFIX}
+  CMAKE_ARGS -DBUILD_UNIT_TESTS:BOOL=OFF -DCMAKE_BUILD_TYPE:STRING=Release -DCMAKE_INSTALL_PREFIX:PATH=${PROJECT_BINARY_DIR}/install -Deigenpy_FOUND=${eigenpy_FOUND} -Deigenpy_INCLUDE_DIRS=${eigenpy_INCLUDE_DIRS} -Deigenpy_LIBRARIES=${eigenpy_LIBRARIES} -DEIGEN3_INCLUDE_DIR=${EIGEN3_INCLUDE_DIR}
+)
+ExternalProject_Add_Step(pinocchio CopyToDevel
+  COMMENT "Copying to devel"
+  COMMAND ${CMAKE_COMMAND} -E copy ${PROJECT_BINARY_DIR}/install/lib/libpinocchio.so ${CATKIN_DEVEL_PREFIX}/lib/
+  COMMAND ${CMAKE_COMMAND} -E make_directory ${CATKIN_DEVEL_PREFIX}/lib/python2.7/dist-packages/
+  COMMAND ${CMAKE_COMMAND} -E copy_directory ${PROJECT_BINARY_DIR}/install/lib/python2.7/site-packages/pinocchio/ ${CATKIN_DEVEL_PREFIX}/lib/python2.7/dist-packages/pinocchio/
+  COMMAND ${CMAKE_COMMAND} -E copy_directory ${PROJECT_BINARY_DIR}/install/include/${PROJECT_NAME}/ ${CATKIN_DEVEL_PREFIX}/include/${PROJECT_NAME}/
+  DEPENDEES install
 )
 
 if(IS_DIRECTORY ${CMAKE_INSTALL_PREFIX})
-  message(WARNING "Compiling for install workspace (${CMAKE_INSTALL_PREFIX})")
+  message(STATUS "Compiling for install workspace (${CMAKE_INSTALL_PREFIX})")
   catkin_package(
-    INCLUDE_DIRS include/${PROJECT_NAME}
-    LIBRARIES ${PYTHON_LIBRARIES}
+    INCLUDE_DIRS include/${PROJECT_NAME} ${EIGEN3_INCLUDE_DIR}
+    LIBRARIES ${PYTHON_LIBRARIES} pinocchio
   )
 else()
-  message(WARNING "Compiling for devel workspace")
+  message(STATUS "Compiling for devel workspace")
   file(MAKE_DIRECTORY ${CATKIN_DEVEL_PREFIX}/include/${PROJECT_NAME})
   catkin_package(
     INCLUDE_DIRS ${CATKIN_DEVEL_PREFIX}/include ${EIGEN3_INCLUDE_DIR}
-    LIBRARIES ${PYTHON_LIBRARIES}
+    LIBRARIES ${PYTHON_LIBRARIES} pinocchio
   )
 endif()
 
@@ -41,6 +50,6 @@ install(
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 )
 install(
-  DIRECTORY ${CATKIN_DEVEL_PREFIX}/lib/
-  DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+  DIRECTORY ${CATKIN_DEVEL_PREFIX}/lib/python2.7/dist-packages/pinocchio/
+  DESTINATION ${CATKIN_PACKAGE_PYTHON_DESTINATION}
 )
