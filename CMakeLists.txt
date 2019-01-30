@@ -6,7 +6,7 @@ find_package(Eigen3 REQUIRED)
 
 include(ExternalProject)
 
-ExternalProject_Add(pinocchio
+ExternalProject_Add(pinocchio_src
   GIT_REPOSITORY "https://github.com/stack-of-tasks/pinocchio.git"
   GIT_TAG "36aeeebadfe1c55675f2265bdb8fe534d50e95cb"
 
@@ -16,7 +16,7 @@ ExternalProject_Add(pinocchio
 
   CMAKE_ARGS -DBUILD_UNIT_TESTS:BOOL=OFF -DCMAKE_BUILD_TYPE:STRING=Release -DCMAKE_INSTALL_PREFIX:PATH=${PROJECT_BINARY_DIR}/install -Deigenpy_FOUND=${eigenpy_FOUND} -Deigenpy_INCLUDE_DIRS=${eigenpy_INCLUDE_DIRS} -Deigenpy_LIBRARIES=${eigenpy_LIBRARIES} -DEIGEN3_INCLUDE_DIR=${EIGEN3_INCLUDE_DIR}
 )
-ExternalProject_Add_Step(pinocchio CopyToDevel
+ExternalProject_Add_Step(pinocchio_src CopyToDevel
   COMMENT "Copying to devel"
   COMMAND ${CMAKE_COMMAND} -E copy ${PROJECT_BINARY_DIR}/install/lib/libpinocchio.so ${CATKIN_DEVEL_PREFIX}/lib/
   COMMAND ${CMAKE_COMMAND} -E make_directory ${CATKIN_DEVEL_PREFIX}/lib/python2.7/dist-packages/
@@ -45,8 +45,8 @@ install(
   DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
 )
 install(
-  DIRECTORY ${CATKIN_DEVEL_PREFIX}/share/${PROJECT_NAME}/
-  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
+  FILES ${CATKIN_DEVEL_PREFIX}/lib/libpinocchio.so
+  DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 )
 install(
   DIRECTORY ${CATKIN_DEVEL_PREFIX}/lib/python2.7/dist-packages/pinocchio/
