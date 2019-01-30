@@ -1,0 +1,3 @@
+- git:
+    uri: https://github.com/ipab-slmc/eigenpy.git
+    local-name: eigenpy

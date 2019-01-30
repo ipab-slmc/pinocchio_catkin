@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 2.8.12)
 project(pinocchio)
 
-find_package(catkin REQUIRED)
+find_package(catkin REQUIRED COMPONENTS eigenpy)
 
 include(ExternalProject)
 
@@ -39,4 +39,8 @@ install(
 install(
   DIRECTORY ${CATKIN_DEVEL_PREFIX}/share/${PROJECT_NAME}/
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
+)
+install(
+  DIRECTORY ${CATKIN_DEVEL_PREFIX}/lib/
+  DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 )

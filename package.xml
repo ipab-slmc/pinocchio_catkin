@@ -15,4 +15,5 @@
   <depend>liburdfdom-dev</depend>
   <depend>eigen</depend>
   <depend>boost</depend>
+  <depend>eigenpy</depend>
 </package>
