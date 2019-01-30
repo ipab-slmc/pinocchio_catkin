@@ -7,9 +7,8 @@ find_package(Eigen3 REQUIRED)
 include(ExternalProject)
 
 ExternalProject_Add(pinocchio
-  # GIT_REPOSITORY "https://github.com/stack-of-tasks/pinocchio.git"
-  GIT_REPOSITORY "https://github.com/wxmerkt/pinocchio.git"
-  GIT_TAG "devel"
+  GIT_REPOSITORY "https://github.com/stack-of-tasks/pinocchio.git"
+  GIT_TAG "36aeeebadfe1c55675f2265bdb8fe534d50e95cb"
 
   UPDATE_COMMAND ""
   PATCH_COMMAND ""
