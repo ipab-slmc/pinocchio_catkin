@@ -3,6 +3,7 @@ project(pinocchio)
 
 find_package(catkin REQUIRED COMPONENTS eigenpy)
 find_package(Eigen3 REQUIRED)
+find_package(Boost REQUIRED COMPONENTS system)
 
 include(ExternalProject)
 
@@ -30,7 +31,9 @@ if(IS_DIRECTORY ${CMAKE_INSTALL_PREFIX})
   catkin_package(
     INCLUDE_DIRS include/${PROJECT_NAME} ${EIGEN3_INCLUDE_DIR}
     LIBRARIES ${PYTHON_LIBRARIES} pinocchio
+    DEPENDS urdfdom urdfdom_headers Boost
     CFG_EXTRAS pinocchio.cmake
+    # SKIP_PKG_CONFIG_GENERATION
   )
 else()
   message(STATUS "Compiling for devel workspace")
@@ -38,7 +41,9 @@ else()
   catkin_package(
     INCLUDE_DIRS ${CATKIN_DEVEL_PREFIX}/include ${EIGEN3_INCLUDE_DIR}
     LIBRARIES ${PYTHON_LIBRARIES} pinocchio
+    DEPENDS urdfdom urdfdom_headers Boost
     CFG_EXTRAS pinocchio.cmake
+    # SKIP_PKG_CONFIG_GENERATION
   )
 endif()
 
