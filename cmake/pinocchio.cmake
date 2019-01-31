@@ -1,22 +1,25 @@
-cmake_minimum_required(VERSION 2.8.3)
-
 # catkin generates its own pkg-config files. These do not contain all the logic
 # included in the original Pinocchio. As thus, we have to mirror the logic here
 # as a configuration-step logic:
 
+# force automatic escaping of preprocessor definitions
+cmake_policy(PUSH)
+cmake_policy(SET CMP0005 NEW)
+
 # find_package(CppAD QUIET)
 # if(CPPAD_FOUND)
 #     # Mirror PKG_CONFIG_APPEND_CFLAGS("-DPINOCCHIO_WITH_CPPAD_SUPPORT")
-#     add_definitions(-DPINOCCHIO_WITH_CPPAD_SUPPORT)
+#     add_compile_options(-DPINOCCHIO_WITH_CPPAD_SUPPORT)
 #     message(FATAL_ERROR "CppAD logic not yet implemented")
 #     # PKG_CONFIG_APPEND_CFLAGS("-DPINOCCHIO_CPPAD_REQUIRES_MATRIX_BASE_PLUGIN")
 #     # PKG_CONFIG_APPEND_CFLAGS("-DPINOCCHIO_WITH_CPPADCG_SUPPORT")
 # endif(CPPAD_FOUND)
 
 # Special care of urdfdom version
-find_package(urdfdom QUIET)
+find_package(PkgConfig)
+pkg_search_module(URDFDOM urdfdom)
+# find_package(urdfdom QUIET) # Does not export version :'(
 if(URDFDOM_FOUND)
-  message(WARNING "URDFDOM_VERSION ${URDFDOM_VERSION}")
   if(${URDFDOM_VERSION} VERSION_LESS "0.3.0")
     add_definitions(-DPINOCCHIO_URDFDOM_COLLISION_WITH_GROUP_NAME)
   endif(${URDFDOM_VERSION} VERSION_LESS "0.3.0")
@@ -31,3 +34,5 @@ if(URDFDOM_FOUND)
     add_definitions(-DPINOCCHIO_URDFDOM_USE_STD_SHARED_PTR)
   endif(${URDFDOM_VERSION} VERSION_GREATER "0.4.2")
 endif(URDFDOM_FOUND)
+
+cmake_policy(POP)
