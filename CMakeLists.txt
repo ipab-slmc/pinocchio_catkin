@@ -30,6 +30,7 @@ if(IS_DIRECTORY ${CMAKE_INSTALL_PREFIX})
   catkin_package(
     INCLUDE_DIRS include/${PROJECT_NAME} ${EIGEN3_INCLUDE_DIR}
     LIBRARIES ${PYTHON_LIBRARIES} pinocchio
+    CFG_EXTRAS pinocchio.cmake
   )
 else()
   message(STATUS "Compiling for devel workspace")
@@ -37,6 +38,7 @@ else()
   catkin_package(
     INCLUDE_DIRS ${CATKIN_DEVEL_PREFIX}/include ${EIGEN3_INCLUDE_DIR}
     LIBRARIES ${PYTHON_LIBRARIES} pinocchio
+    CFG_EXTRAS pinocchio.cmake
   )
 endif()
 
