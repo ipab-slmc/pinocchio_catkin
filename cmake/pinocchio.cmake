@@ -16,23 +16,22 @@ cmake_policy(SET CMP0005 NEW)
 # endif(CPPAD_FOUND)
 
 # Special care of urdfdom version
-find_package(PkgConfig)
-pkg_search_module(URDFDOM urdfdom)
-# find_package(urdfdom QUIET) # Does not export version :'(
-if(URDFDOM_FOUND)
-  if(${URDFDOM_VERSION} VERSION_LESS "0.3.0")
+find_package(urdfdom QUIET)
+if(urdfdom_FOUND)
+  find_package(urdfdom_headers QUIET)
+  if(${urdfdom_headers_VERSION} VERSION_LESS "0.3.0")
     add_definitions(-DPINOCCHIO_URDFDOM_COLLISION_WITH_GROUP_NAME)
-  endif(${URDFDOM_VERSION} VERSION_LESS "0.3.0")
+  endif(${urdfdom_headers_VERSION} VERSION_LESS "0.3.0")
 
   # defines types from version 0.4.0
-  if(NOT ${URDFDOM_VERSION} VERSION_LESS "0.4.0")
+  if(NOT ${urdfdom_headers_VERSION} VERSION_LESS "0.4.0")
     add_definitions(-DPINOCCHIO_URDFDOM_TYPEDEF_SHARED_PTR)
-  endif(NOT ${URDFDOM_VERSION} VERSION_LESS "0.4.0")
+  endif(NOT ${urdfdom_headers_VERSION} VERSION_LESS "0.4.0")
   
   # std::shared_ptr appears from version 1.0.0
-  if(${URDFDOM_VERSION} VERSION_GREATER "0.4.2")
+  if(${urdfdom_headers_VERSION} VERSION_GREATER "0.4.2")
     add_definitions(-DPINOCCHIO_URDFDOM_USE_STD_SHARED_PTR)
-  endif(${URDFDOM_VERSION} VERSION_GREATER "0.4.2")
-endif(URDFDOM_FOUND)
+  endif(${urdfdom_headers_VERSION} VERSION_GREATER "0.4.2")
+endif(urdfdom_FOUND)
 
 cmake_policy(POP)
