@@ -11,7 +11,7 @@ add_definitions(-Wno-conversions -Wno-deprecated)
 
 ExternalProject_Add(pinocchio_src
   GIT_REPOSITORY "https://github.com/stack-of-tasks/pinocchio.git"
-  GIT_TAG "36aeeebadfe1c55675f2265bdb8fe534d50e95cb"
+  GIT_TAG "0d9b449b6f6505231073907601568faefa3cac48"
 
   CMAKE_ARGS -DBUILD_UNIT_TESTS:BOOL=OFF -DCMAKE_BUILD_TYPE:STRING=Release -DCMAKE_INSTALL_PREFIX:PATH=${PROJECT_BINARY_DIR}/install -Deigenpy_FOUND=${eigenpy_FOUND} -Deigenpy_INCLUDE_DIRS=${eigenpy_INCLUDE_DIRS} -Deigenpy_LIBRARIES=${eigenpy_LIBRARIES} -DEIGEN3_INCLUDE_DIR=${EIGEN3_INCLUDE_DIR}
 )
