@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 2.8.12)
 project(pinocchio)
 
-find_package(catkin REQUIRED COMPONENTS eigenpy)
+find_package(catkin REQUIRED COMPONENTS eigenpy hpp-fcl)
 find_package(Eigen3 REQUIRED)
 find_package(Boost REQUIRED COMPONENTS system)
 
