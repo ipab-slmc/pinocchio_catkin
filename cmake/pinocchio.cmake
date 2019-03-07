@@ -15,6 +15,10 @@ cmake_policy(SET CMP0005 NEW)
 #     # PKG_CONFIG_APPEND_CFLAGS("-DPINOCCHIO_WITH_CPPADCG_SUPPORT")
 # endif(CPPAD_FOUND)
 
+# Special care of assimp bug (via hpp-fcl)
+find_package(assimp REQUIRED)
+include_directories(${ASSIMP_INCLUDE_DIRS} /usr/include)
+
 # Special care of urdfdom version
 find_package(urdfdom QUIET)
 if(urdfdom_FOUND)

@@ -5,6 +5,9 @@ find_package(catkin REQUIRED COMPONENTS eigenpy hpp-fcl)
 find_package(Eigen3 REQUIRED)
 find_package(Boost REQUIRED COMPONENTS system)
 
+find_package(assimp REQUIRED)
+include_directories(${ASSIMP_INCLUDE_DIRS} /usr/include)
+
 include(ExternalProject)
 
 add_definitions(-Wno-conversions -Wno-deprecated)
@@ -16,7 +19,8 @@ ExternalProject_Add(pinocchio_src
   UPDATE_COMMAND ""
   PATCH_COMMAND ""
   TEST_COMMAND ""
-  CMAKE_ARGS -DBUILD_UNIT_TESTS:BOOL=OFF -DCMAKE_BUILD_TYPE:STRING=Release -DCMAKE_INSTALL_PREFIX:PATH=${PROJECT_BINARY_DIR}/install -Deigenpy_FOUND=${eigenpy_FOUND} -Deigenpy_INCLUDE_DIRS=${eigenpy_INCLUDE_DIRS} -Deigenpy_LIBRARIES=${eigenpy_LIBRARIES} -DEIGEN3_INCLUDE_DIR=${EIGEN3_INCLUDE_DIR}
+  CMAKE_ARGS -DBUILD_UNIT_TESTS:BOOL=OFF -DCMAKE_BUILD_TYPE:STRING=Release -DCMAKE_INSTALL_PREFIX:PATH=${PROJECT_BINARY_DIR}/install -Deigenpy_FOUND=${eigenpy_FOUND} -Deigenpy_INCLUDE_DIRS=${eigenpy_INCLUDE_DIRS} -Deigenpy_LIBRARIES=${eigenpy_LIBRARIES} -Dhpp-fcl_FOUND=${hpp-fcl_FOUND} -Dhpp-fcl_INCLUDE_DIRS=${hpp-fcl_INCLUDE_DIRS} -Dhpp-fcl_LIBRARIES=${hpp-fcl_LIBRARIES} 
+  -Dassimp_INCLUDE_DIRS=/usr/lib/include -DEIGEN3_INCLUDE_DIR=${EIGEN3_INCLUDE_DIR}
 )
 ExternalProject_Add_Step(pinocchio_src CopyToDevel
   COMMENT "Copying to devel"
