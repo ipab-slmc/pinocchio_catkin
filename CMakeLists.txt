@@ -11,7 +11,7 @@ add_definitions(-Wno-conversions -Wno-deprecated)
 
 ExternalProject_Add(pinocchio_src
   GIT_REPOSITORY "https://github.com/stack-of-tasks/pinocchio.git"
-  GIT_TAG "8e5c4da2a6cce6241e3a128fce32bffc6bbaf37d"
+  GIT_TAG "devel"
 
   UPDATE_COMMAND ""
   PATCH_COMMAND ""
