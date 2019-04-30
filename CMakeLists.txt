@@ -11,12 +11,12 @@ add_definitions(-Wno-conversions -Wno-deprecated)
 
 ExternalProject_Add(pinocchio_src
   GIT_REPOSITORY "https://github.com/stack-of-tasks/pinocchio.git"
-  GIT_TAG "v2.1.2"
+  GIT_TAG "v2.1.3"
 
   UPDATE_COMMAND ""
   PATCH_COMMAND ""
   TEST_COMMAND ""
-  CMAKE_ARGS -DBUILD_UNIT_TESTS:BOOL=OFF -DCMAKE_BUILD_TYPE:STRING=Release -DCMAKE_INSTALL_PREFIX:PATH=${PROJECT_BINARY_DIR}/install -Deigenpy_FOUND=${eigenpy_FOUND} -Deigenpy_INCLUDE_DIRS=${eigenpy_INCLUDE_DIRS} -Deigenpy_LIBRARIES=${eigenpy_LIBRARIES} -DEIGEN3_INCLUDE_DIR=${EIGEN3_INCLUDE_DIR}
+  CMAKE_ARGS -DBUILD_UNIT_TESTS:BOOL=OFF -DCMAKE_BUILD_TYPE:STRING=Release -DCMAKE_INSTALL_PREFIX:PATH=${PROJECT_BINARY_DIR}/install -Deigenpy_FOUND=${eigenpy_FOUND} -Deigenpy_INCLUDE_DIRS=${eigenpy_INCLUDE_DIRS} -Deigenpy_LIBRARIES=${eigenpy_LIBRARIES} -DEIGEN3_INCLUDE_DIR=${EIGEN3_INCLUDE_DIR} -DBUILD_PYTHON_INTERFACE:BOOL=ON #-DPYTHON_DEB_LAYOUT:BOOL=${SETUPTOOLS_DEB_LAYOUT} - we copy from site-packages
 )
 ExternalProject_Add_Step(pinocchio_src CopyToDevel
   COMMENT "Copying to devel"
